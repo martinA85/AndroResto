@@ -2,9 +2,12 @@ package com.example.mallimonier2017.androresto.activity;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.mallimonier2017.androresto.R;
+import com.example.mallimonier2017.androresto.adaptater.PlaceAdapter;
 import com.example.mallimonier2017.androresto.dao.PlaceDao;
 import com.example.mallimonier2017.androresto.model.Place;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -26,13 +29,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        final PlaceDao dao = new PlaceDao(this);
-
-        Place place = new Place("test", "test", "-1", "47", new Float(5), "id");
-
-        dao.insert(place);
-        Log.d("TEST", "wouhou");
     }
 
 
