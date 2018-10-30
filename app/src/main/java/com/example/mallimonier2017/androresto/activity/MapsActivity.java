@@ -1,15 +1,15 @@
 package com.example.mallimonier2017.androresto.activity;
 
-import android.support.v4.app.FragmentActivity;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.example.mallimonier2017.androresto.R;
-import com.example.mallimonier2017.androresto.adaptater.PlaceAdapter;
 import com.example.mallimonier2017.androresto.dao.PlaceDao;
-import com.example.mallimonier2017.androresto.model.Place;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,28 +19,47 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private Context context;
+    private static final String TAG = "MyActivity";
     private GoogleMap mMap;
+    PlaceDao dao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context = getApplicationContext();
+        dao = new PlaceDao(context);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.frag);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(com.google.android.gms.location.places.Place place) {
+                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title("Marker in Sydney"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+                Log.w(TAG,"Ici");
+                dao.insert(new com.example.mallimonier2017.androresto.model.Place(
+                        place.getName().toString(),
+                        place.getAddress().toString(),
+                        Double.toString(place.getLatLng().latitude),
+                        Double.toString(place.getLatLng().longitude),
+                        place.getRating(),
+                        place.getId()));
+            }
+
+            @Override
+            public void onError(Status status) {
+                Log.w(TAG,status.toString());
+            }
+        });
+
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

@@ -3,4 +3,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_detail_place">DetailPlaceActivity</string>
     <string name="text_view_name_item">Nom</string>
+    <string name="liste">Liste</string>
+    <string name="carte">Carte</string>
 </resources>
