@@ -1,15 +1,9 @@
 package com.example.mallimonier2017.androresto.activity;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
 
 import com.example.mallimonier2017.androresto.R;
-import com.example.mallimonier2017.androresto.adaptater.PlaceAdapter;
-import com.example.mallimonier2017.androresto.dao.PlaceDao;
-import com.example.mallimonier2017.androresto.model.Place;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -46,8 +40,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng paris = new LatLng(48.866667, 2.333333);
+        mMap.addMarker(new MarkerOptions().position(paris).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(paris));
     }
 }

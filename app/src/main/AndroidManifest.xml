@@ -40,10 +40,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.ListPlaceActivity" />
-        <activity
-            android:name=".activity.DetailPlaceActivity"
-            android:label="@string/title_activity_detail_place"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
