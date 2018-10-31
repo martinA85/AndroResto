@@ -32,7 +32,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     public void onBindViewHolder(@NonNull PlaceViewHolder holder, int position) {
         final Place placeToShow = listPlace.get(position);
         holder.textViewName.setText(placeToShow.getName());
-        holder.textViewName.setText(placeToShow.getAddress());
+        holder.textViewAddresse.setText(placeToShow.getAddress());
         holder.ratingBarRate.setRating(placeToShow.getRating());
     }
 

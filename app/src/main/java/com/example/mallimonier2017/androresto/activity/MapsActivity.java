@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.example.mallimonier2017.androresto.R;
 import com.example.mallimonier2017.androresto.dao.PlaceDao;
+import com.example.mallimonier2017.androresto.model.Place;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,7 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(com.google.android.gms.location.places.Place place) {
-                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title("Marker in Sydney"));
+                mMap.addMarker(new MarkerOptions().position(place.getLatLng()).title("Marker in " + place.getName()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
                 Log.w(TAG,"Ici");
                 dao.insert(new com.example.mallimonier2017.androresto.model.Place(
@@ -88,8 +91,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+//        LatLng sydney = new LatLng(-34, 151);
+//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+        PlaceDao dao = new PlaceDao(this);
+        ArrayList<Place> listPlace = dao.selectAll();
+        for (Place place : listPlace){
+            LatLng marker = new LatLng(new Double(place.getLat().toString()), new Double(place.getLongi().toString()));
+            mMap.addMarker(new MarkerOptions().position(marker).title("Marker in " + place.getName()));
+        }
     }
 }
