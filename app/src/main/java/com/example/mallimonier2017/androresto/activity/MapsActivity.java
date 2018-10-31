@@ -1,9 +1,13 @@
 package com.example.mallimonier2017.androresto.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.example.mallimonier2017.androresto.R;
 import com.example.mallimonier2017.androresto.dao.PlaceDao;
@@ -58,7 +62,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        BottomNavigationView navBar = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        navBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.navigation_home:
+                        Intent intentToMapsActivity = new Intent(getApplicationContext(), MapsActivity.class);
+                        getApplicationContext().startActivity(intentToMapsActivity);
+                        return true;
+                    case R.id.navigation_dashboard:
+                        Intent intentToListActivity = new Intent(getApplicationContext(), ListPlaceActivity.class);
+                        getApplicationContext().startActivity(intentToListActivity);
+                        return true;
+                }
+                return false;
+            }
+        });
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

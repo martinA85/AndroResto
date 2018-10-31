@@ -17,15 +17,8 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
 
     private ArrayList<Place> listPlace = new ArrayList<Place>();
 
-    public PlaceAdapter(){
-        listPlace.add(new Place("test", "test", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test1", "test1", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test2", "test2", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test3", "test3", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test4", "test4", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test5", "test5", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test6", "test6", "-1", "47", new Float(5), "id"));
-        listPlace.add(new Place("test7", "test7", "-1", "47", new Float(5), "id"));
+    public PlaceAdapter(ArrayList<Place> placeList){
+        this.listPlace = placeList;
     }
 
     @NonNull
