@@ -36,6 +36,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
         holder.textViewName.setText(placeToShow.getName());
         holder.textViewAddresse.setText(placeToShow.getAddress());
         holder.ratingBarRate.setRating(placeToShow.getRating());
+        holder.textViewDistance.setText(placeToShow.getDist());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

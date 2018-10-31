@@ -1,6 +1,8 @@
 package com.example.mallimonier2017.androresto.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -21,6 +23,10 @@ public class ListPlaceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_place);
         final RecyclerView recyclerView = findViewById(R.id.RecyclerViewPlaces);
         final PlaceDao dao = new PlaceDao(this);
+
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+
         final PlaceAdapter adapter = new PlaceAdapter(dao.selectAll());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);

@@ -11,6 +11,7 @@ public class Place implements Parcelable {
     private String longi;
     private Float rating;
     private String id;
+    private String dist = "0";
 
     public Place(){
 
@@ -23,6 +24,17 @@ public class Place implements Parcelable {
         this.longi = longi;
         this.rating = rating;
         this.id = id;
+        this.computeDist(new Float(47.2238986), new Float(-1.6216199));
+    }
+
+    public Place(String name, String address, String lat, String longi, Float rating, String id, float latActual, float longiActual) {
+        this.name = name;
+        this.address = address;
+        this.lat = lat;
+        this.longi = longi;
+        this.rating = rating;
+        this.id = id;
+        this.computeDist(new Float(latActual), new Float(longiActual));
     }
 
     public String getName() {
@@ -71,6 +83,42 @@ public class Place implements Parcelable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getDist() {
+        return dist;
+    }
+
+    public void setDist(String dist) {
+        this.dist = dist;
+    }
+
+    public void computeDist(float lat2, float lon2){
+        String unit = "K";
+        double lat1 = new Double(this.getLat());
+        double lon1 = new Double(this.getLongi());
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == "K") {
+            dist = dist * 1.609344;
+        } else if (unit == "N") {
+            dist = dist * 0.8684;
+        }
+        dist = Math.round(dist);
+        String distStr = String.valueOf(dist);
+        distStr += " KM";
+        this.dist = distStr;
+    }
+
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 
     protected Place(Parcel in) {
