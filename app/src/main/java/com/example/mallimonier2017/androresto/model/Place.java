@@ -1,7 +1,9 @@
 package com.example.mallimonier2017.androresto.model;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class Place implements Parcelable {
 
@@ -94,23 +96,24 @@ public class Place implements Parcelable {
     }
 
     public void computeDist(float lat2, float lon2){
-        String unit = "K";
-        double lat1 = new Double(this.getLat());
-        double lon1 = new Double(this.getLongi());
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        if (unit == "K") {
-            dist = dist * 1.609344;
-        } else if (unit == "N") {
-            dist = dist * 0.8684;
-        }
-        dist = Math.round(dist);
-        String distStr = String.valueOf(dist);
-        distStr += " KM";
-        this.dist = distStr;
+        Log.d("LocationLog", "Name : " + this.getName());
+        Log.d("LocationLog", "long point : " + this.getLongi());
+        Log.d("LocationLog", "lat point : " + this.getLat());
+        Log.d("LocationLog", "long tel : " + lat2);
+        Log.d("LocationLog", "long tel : " + lon2);
+
+        Location pos1 = new Location("");
+        pos1.setLatitude(new Double(this.getLat()));
+        pos1.setLongitude(new Double(this.getLongi()));
+
+        Location pos2 = new Location("");
+        pos2.setLatitude(new Double(lat2));
+        pos2.setLongitude(new Double(lon2));
+
+        float disttest = pos1.distanceTo(pos2) / 1000;
+        Log.d("LocationLog", "disttest : " + disttest);
+
+        this.dist = String.valueOf(disttest) + "km";
     }
 
     private static double deg2rad(double deg) {

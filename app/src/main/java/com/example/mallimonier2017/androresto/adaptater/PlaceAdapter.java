@@ -3,6 +3,7 @@ package com.example.mallimonier2017.androresto.adaptater;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,14 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.PlaceViewHol
     public PlaceAdapter.PlaceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View viewElementList = LayoutInflater.from(parent.getContext()).inflate(R.layout.place_item_view, parent, false);
         return new PlaceViewHolder(viewElementList);
+    }
+
+    public void updatePosition(double lat, double longi){
+        for(int i=0; i < this.listPlace.size(); i++){
+            Log.d("LocationLog", "lat : " + lat);
+            Log.d("LocationLog", "long : " + longi);
+            this.listPlace.get(i).computeDist(new Float(lat), new Float(longi));
+        }
     }
 
     @Override
